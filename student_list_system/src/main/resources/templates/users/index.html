@@ -12,14 +12,32 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <title>研修生コミュニティ</title>
+    <title>研修生一覧</title>
 </header>
-
 <body>
-    <div style="text-align:center">
-        <h1>研修生コミュニティ</h1>
-        <a class="btn btn-primary rounded-pill" href="/users/index">一覧</a>
+    <div class="mx-auto h1" style="text-align:center; margin-top:20px;margin-bottom:20px;">
+        研修生一覧
     </div>
-</body>
+    <div style="text-align:right">
+        <a class="btn btn-primary rounded-pill" href="/users/create">+</a>
+    </div>
+    <table class="table" style="margin-top:20px; margin-bottom:20px;">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">名前</th>
+                <th scope="col">メールアドレス</th>
+                <th scope="col">削除</th>
+                <th scope="col">編集</th>
+            </tr>
+        </thead>
 
-</html>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.mailAddress}"></td>
+            <td><img src="..\icon\trashbox.png"></td>
+            <td><img src="..\icon\pencil.png"></td>
+        </tr>
+    </table>
+</body>
