@@ -1,4 +1,4 @@
-package com.example.student_list_system.service;
+package com.example.student_list_system.users;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.example.student_list_system.model.Users;
-import com.example.student_list_system.repository.UsersRepository;
 
 @Service
 public class UsersService {
@@ -27,5 +24,16 @@ public class UsersService {
             users.add(user);
         }
         return users;
+    }
+
+    public boolean createUserPost(String name, String mail){
+
+        Users user = new Users();
+        user.setName(name);
+        user.setMailAddress(mail);
+
+        repository.createUserRecord(user);
+
+        return true;
     }
 }

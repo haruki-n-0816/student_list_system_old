@@ -12,28 +12,35 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <title>研修生 新規登録</title>
+    <title>研修生一覧</title>
 </header>
 
 <body>
     <div class="mx-auto h1" style="text-align:center; margin-top:20px;margin-bottom:20px;">
-        研修生 新規登録
+        研修生一覧
     </div>
-    <form method="post" action="/create_confirm">
-        <div style="text-align:center">
-            <label>名前</label>
-            <input type="text" name="userName" style="margin-top: 20px; margin-bottom: 20px;" />
-        </div>
-        <div style="text-align:center">
-            <label>メールアドレス</label>
-            <input type="text" name="eMail" style="margin-top: 20px; margin-bottom: 20px;" />
-        </div>
-        <div style="text-align:center">
-            <input class="btn btn-secondary rounded-pill" type="submit" value="確認" />
-            <a class="btn btn-secondary rounded-pill" href="/users">キャンセル</a>
-        </div>
-    </form>
+    <div style="text-align:right">
+        <a class="btn btn-primary rounded-pill" href="/create">+</a>
+    </div>
+    <table class="table" style="margin-top:20px; margin-bottom:20px;">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">名前</th>
+                <th scope="col">メールアドレス</th>
+                <th scope="col">削除</th>
+                <th scope="col">編集</th>
+            </tr>
+        </thead>
 
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.mailAddress}"></td>
+            <td><a href="/delete"><img th:src="@{\icon\trashbox.png}" alt="削除"></a></td>
+            <td><a href="/update"><img th:src="@{\icon\pencil.png}" alt="編集"></a></td>
+        </tr>
+    </table>
 </body>
 
 </html>

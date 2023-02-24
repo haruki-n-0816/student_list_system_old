@@ -1,4 +1,4 @@
-package com.example.student_list_system.model;
+package com.example.student_list_system.users;
 
 import lombok.Data;
 

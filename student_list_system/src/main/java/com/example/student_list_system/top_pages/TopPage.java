@@ -1,4 +1,4 @@
-package com.example.student_list_system.pages;
+package com.example.student_list_system.top_pages;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +9,6 @@ public class TopPage {
     
     @RequestMapping("/")
     private String topPage(){
-        return "top_page";
+        return "users/top_page";
     }
 }

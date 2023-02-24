@@ -16,24 +16,23 @@
 </header>
 
 <body>
-    <div class="mx-auto h1" style="text-align:center; margin-top:20px;margin-bottom:20px;">
-        研修生 新規登録
-    </div>
-    <form method="post" action="/create_confirm">
-        <div style="text-align:center">
-            <label>名前</label>
-            <input type="text" name="userName" style="margin-top: 20px; margin-bottom: 20px;" />
-        </div>
-        <div style="text-align:center">
-            <label>メールアドレス</label>
-            <input type="text" name="eMail" style="margin-top: 20px; margin-bottom: 20px;" />
-        </div>
-        <div style="text-align:center">
-            <input class="btn btn-secondary rounded-pill" type="submit" value="確認" />
+    <div style="text-align: center;">
+        <h1>新規登録 確認</h1>
+        <form method="post" action="create_complete">
+            <div style="margin-top: 20px; margin-bottom: 20px;">下記の情報で新規登録をします。よろしいですか?</div>
+            <div>
+                <label>名前</label>
+                <label th:text="${confirmName}"></label>
+                <input type="hidden" name="userName" th:value="${confirmName}"/>
+            </div>
+            <div>
+                <label>メールアドレス</label>
+                <label th:text="${eMail}"></label>
+                <input type="hidden" name="eMail" th:value="${eMail}"/>
+            </div>
+            <input class="btn btn-primary rounded-pill" type="submit" value="登録"/>
             <a class="btn btn-secondary rounded-pill" href="/users">キャンセル</a>
-        </div>
-    </form>
-
+        </form>
+    </div>
 </body>
-
 </html>
