@@ -27,8 +27,8 @@
             </div>
             <div>
                 <label>メールアドレス</label>
-                <label th:text="${eMail}"></label>
-                <input type="hidden" name="eMail" th:value="${eMail}"/>
+                <label th:text="${confirmMailAddress}"></label>
+                <input type="hidden" name="mailAddress" th:value="${confirmMailAddress}"/>
             </div>
             <input class="btn btn-primary rounded-pill" type="submit" value="登録"/>
             <a class="btn btn-secondary rounded-pill" href="/users">キャンセル</a>

@@ -18,6 +18,7 @@ public class UsersController {
 
     @GetMapping("/users")
     public String getUser(Model model) {
+
         List<Users> users = service.getUsers();
         model.addAttribute("users", users);
 
@@ -26,19 +27,69 @@ public class UsersController {
 
     @GetMapping("/create")
     private String createUser(){
+
         return "users/create";
     }
 
     @PostMapping("/create_confirm")
-    private String createConfirmUser(@RequestParam("userName") String name,@RequestParam("eMail") String eMail,Model model){
+    private String createConfirmUser(@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress,Model model){
+
         model.addAttribute("confirmName", name);
-        model.addAttribute("eMail", eMail);
+        model.addAttribute("confirmMailAddress", mailAddress);
+
         return "users/create-confirm";
     }
 
     @PostMapping("/create_complete")
-    public String createCompleteUser(@RequestParam("userName") String name,@RequestParam("eMail") String eMail,Model model) {
-        service.createUserPost(name, eMail);
+    public String createCompleteUser(@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress,Model model) {
+
+        service.createUserPost(name, mailAddress);
+
+        return "redirect:/users";
+    }
+
+    @PostMapping("/delete")
+    public String deleteUser(@RequestParam("id") String id,@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress, Model model){
+
+        model.addAttribute("confirmId",id);
+        model.addAttribute("confirmName",name);
+        model.addAttribute("confirmMailAddress", mailAddress);
+
+        return "users/delete";
+    }
+    @PostMapping("delete_complete")
+    public String deleteCompleteUser(@RequestParam("id") String id,Model model){
+        
+        service.deleteUserPost(id);
+
+        return "redirect:/users";
+    }
+
+    @PostMapping("/update")
+    public String updateUser(@RequestParam("id") String id,@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress, Model model){
+        
+        model.addAttribute("id",id);
+        model.addAttribute("currentName",name);
+        model.addAttribute("currentMailAddress", mailAddress);
+
+        return "users/update";
+    }
+
+    @PostMapping("/update_confirm")
+    public String updateConfirmUser(@RequestParam("id") String id,@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress, Model model){
+
+        model.addAttribute("confirmId",id);
+        model.addAttribute("confirmName",name);
+        model.addAttribute("confirmMailAddress", mailAddress);
+
+        return "users/update-confirm";
+    }
+
+    @PostMapping("/update_complete")
+    public String updateCompleteUser(@RequestParam("id") String id,@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress, Model model){
+        
+        service.updateUserPost(id, name, mailAddress);
+
         return "redirect:/users";
     }
 }

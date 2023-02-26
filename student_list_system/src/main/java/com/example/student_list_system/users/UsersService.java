@@ -14,6 +14,7 @@ public class UsersService {
     private UsersRepository repository;
 
     public List<Users> getUsers(){
+
         List<Map<String, Object>> querySet = repository.usersAll();
         List<Users> users = new ArrayList<>();
         for (var record : querySet) {
@@ -23,6 +24,7 @@ public class UsersService {
             user.setMailAddress((String)record.get("mail_address"));
             users.add(user);
         }
+        
         return users;
     }
 
@@ -31,8 +33,27 @@ public class UsersService {
         Users user = new Users();
         user.setName(name);
         user.setMailAddress(mail);
-
         repository.createUserRecord(user);
+
+        return true;
+    }
+    
+    public boolean deleteUserPost(String id){
+
+        Users user = new Users();
+        user.setId(Integer.parseInt(id));
+        repository.deleteUserRecord(user);
+
+        return true;
+    }
+
+    public boolean updateUserPost(String id, String name, String mailAddress){
+
+        Users user = new Users();
+        user.setId(Integer.parseInt(id));
+        user.setName(name);
+        user.setMailAddress(mailAddress);
+        repository.updateUserRecord(user);
 
         return true;
     }

@@ -12,28 +12,32 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <title>研修生 新規登録</title>
+    <title>研修生 編集</title>
 </header>
 
 <body>
     <div class="mx-auto h1" style="text-align:center; margin-top:20px;margin-bottom:20px;">
-        研修生 新規登録
+        研修生 編集
     </div>
-    <form method="post" action="/create_confirm">
+    <form method="post" action="/update_confirm">
+        <div style="text-align:center">
+            <label>ID</label>
+            <label th:text="${id}"></label>
+            <input type="hidden" name="id" th:value="${id}" />
+        </div>
         <div style="text-align:center">
             <label>名前</label>
-            <input type="text" name="userName" style="margin-top: 20px; margin-bottom: 20px;" />
+            <input type="text" name="userName" th:value="${currentName}" style="margin-top: 20px; margin-bottom: 20px;" />
         </div>
         <div style="text-align:center">
             <label>メールアドレス</label>
-            <input type="text" name="mailAddress" style="margin-top: 20px; margin-bottom: 20px;" />
+            <input type="text" name="mailAddress" th:value="${currentMailAddress}" style="margin-top: 20px; margin-bottom: 20px;" />
         </div>
         <div style="text-align:center">
             <input class="btn btn-secondary rounded-pill" type="submit" value="確認" />
             <a class="btn btn-secondary rounded-pill" href="/users">キャンセル</a>
         </div>
     </form>
-
 </body>
 
 </html>

@@ -12,32 +12,32 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <title>研修生 削除</title>
+    <title>研修生 編集 確認</title>
 </header>
+
 <body>
     <div style="text-align: center;">
-        <h1>研修生 削除</h1>
-        <form method="post" action="delete_complete">
+        <h1>研修生 編集 確認</h1>
+        <form method="post" action="update_complete">
+            <div style="margin-top: 20px; margin-bottom: 20px;">下記の情報に編集します。よろしいですか?</div>
             <div>
-                <label>ID:</label>
+                <label>ID</label>
                 <label th:text="${confirmId}"></label>
                 <input type="hidden" name="id" th:value="${confirmId}"/>
             </div>
             <div>
-                <label>名前:</label>
+                <label>名前</label>
                 <label th:text="${confirmName}"></label>
                 <input type="hidden" name="userName" th:value="${confirmName}"/>
             </div>
             <div>
-                <label>メールアドレス:</label>
+                <label>メールアドレス</label>
                 <label th:text="${confirmMailAddress}"></label>
                 <input type="hidden" name="mailAddress" th:value="${confirmMailAddress}"/>
             </div>
-            <div style="margin-top: 20px; margin-bottom: 20px;">こちらのデータを削除します。よろしいですか?</div>
-            <input class="btn btn-danger rounded-pill" type="submit" value="削除"/>
+            <input class="btn btn-primary rounded-pill" type="submit" value="更新"/>
             <a class="btn btn-secondary rounded-pill" href="/users">キャンセル</a>
         </form>
-    </div>    
+    </div>
 </body>
-
 </html>

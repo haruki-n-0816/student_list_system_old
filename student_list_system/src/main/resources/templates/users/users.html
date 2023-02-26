@@ -37,8 +37,22 @@
             <td th:text="${user.id}"></td>
             <td th:text="${user.name}"></td>
             <td th:text="${user.mailAddress}"></td>
-            <td><a href="/delete"><img th:src="@{\icon\trashbox.png}" alt="削除"></a></td>
-            <td><a href="/update"><img th:src="@{\icon\pencil.png}" alt="編集"></a></td>
+            <td>
+                <form method="post" action="/delete">
+                    <input type="image" th:src="@{\icon\trashbox.png}">
+                    <input type="hidden" name="id" th:value="${user.id}">
+                    <input type="hidden" name="userName" th:value="${user.name}">
+                    <input type="hidden" name="mailAddress" th:value="${user.mailAddress}">
+                </form>
+            </td>
+            <td>
+                <form method="post" action="/update">
+                    <input type="image" th:src="@{\icon\pencil.png}">
+                    <input type="hidden" name="id" th:value="${user.id}">
+                    <input type="hidden" name="userName" th:value="${user.name}">
+                    <input type="hidden" name="mailAddress" th:value="${user.mailAddress}">
+                </form>
+            </td>
         </tr>
     </table>
 </body>

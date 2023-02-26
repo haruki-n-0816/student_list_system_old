@@ -22,9 +22,25 @@ public class UsersRepository {
     }
 
     public boolean createUserRecord(Users users){
-        String query = "insert into users(name, mail_address) values(?, ?)";
+
+        String query = "insert into users(name, mail_address) values(?, ?);";
         jdbcTemplate.update(query, users.getName(), users.getMailAddress());
 
+        return true;
+    }
+    public boolean deleteUserRecord(Users users){
+
+        String query = "delete from users where id = ?;";
+        jdbcTemplate.update(query, users.getId());
+
+        return true;
+    }
+
+    public boolean updateUserRecord(Users users){
+
+        String query = "update users set name = ?, mail_address = ? where id = ?;";
+        jdbcTemplate.update(query, users.getName(), users.getMailAddress(), users.getId());
+        
         return true;
     }
 }
