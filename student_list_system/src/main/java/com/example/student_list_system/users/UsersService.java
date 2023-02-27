@@ -47,10 +47,10 @@ public class UsersService {
         return true;
     }
 
-    public boolean updateUserPost(String id, String name, String mailAddress){
+    public boolean updateUserPost(Integer id, String name, String mailAddress){
 
         Users user = new Users();
-        user.setId(Integer.parseInt(id));
+        user.setId(id);
         user.setName(name);
         user.setMailAddress(mailAddress);
         repository.updateUserRecord(user);

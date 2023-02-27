@@ -9,6 +9,6 @@ public class TopPage {
     
     @RequestMapping("/")
     private String topPage(){
-        return "users/top_page";
+        return "users/top-page";
     }
 }

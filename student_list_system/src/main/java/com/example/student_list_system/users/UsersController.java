@@ -49,7 +49,7 @@ public class UsersController {
     }
 
     @PostMapping("/delete")
-    public String deleteUser(@RequestParam("id") String id,@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress, Model model){
+    public String deleteUser(@RequestParam("id") Integer id,@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress, Model model){
 
         model.addAttribute("confirmId",id);
         model.addAttribute("confirmName",name);
@@ -66,7 +66,7 @@ public class UsersController {
     }
 
     @PostMapping("/update")
-    public String updateUser(@RequestParam("id") String id,@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress, Model model){
+    public String updateUser(@RequestParam("id") Integer id,@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress, Model model){
         
         model.addAttribute("id",id);
         model.addAttribute("currentName",name);
@@ -76,7 +76,7 @@ public class UsersController {
     }
 
     @PostMapping("/update_confirm")
-    public String updateConfirmUser(@RequestParam("id") String id,@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress, Model model){
+    public String updateConfirmUser(@RequestParam("id") Integer id,@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress, Model model){
 
         model.addAttribute("confirmId",id);
         model.addAttribute("confirmName",name);
@@ -86,7 +86,7 @@ public class UsersController {
     }
 
     @PostMapping("/update_complete")
-    public String updateCompleteUser(@RequestParam("id") String id,@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress, Model model){
+    public String updateCompleteUser(@RequestParam("id") Integer id,@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress, Model model){
         
         service.updateUserPost(id, name, mailAddress);
 
