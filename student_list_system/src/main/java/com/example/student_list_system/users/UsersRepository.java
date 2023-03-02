@@ -13,12 +13,20 @@ public class UsersRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<Map<String, Object>> usersAll(){
+    public List<Map<String, Object>> usersGet(Integer page){
         
-        String query = "select * from users;";
-        List<Map<String, Object>> users = jdbcTemplate.queryForList(query);
+        String query = "select * from users limit ?, 10;";
+        List<Map<String, Object>> users = jdbcTemplate.queryForList(query, page * 10);
         
         return users;
+    }
+
+    public List<Map<String, Object>> usersCountGet(){
+
+        String query = "select count(*) as 'count' from users;";
+        List<Map<String, Object>> count = jdbcTemplate.queryForList(query);
+
+        return count;
     }
 
     public boolean createUserRecord(Users users){

@@ -17,10 +17,13 @@ public class UsersController {
     @Autowired UsersService service;
 
     @GetMapping("/users")
-    public String getUser(Model model) {
-
-        List<Users> users = service.getUsers();
+    public String getUser(@RequestParam(defaultValue = "0", required = false) Integer page, Model model) {
+        
+        List<Users> users = service.getUsers(page);
         model.addAttribute("users", users);
+
+        // List<Integer> count = service.countGet();
+        // model.addAttribute("pageCount", count);
 
         return "users/users";
     }

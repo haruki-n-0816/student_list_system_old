@@ -13,9 +13,9 @@ public class UsersService {
     @Autowired
     private UsersRepository repository;
 
-    public List<Users> getUsers(){
+    public List<Users> getUsers(Integer page){
 
-        List<Map<String, Object>> querySet = repository.usersAll();
+        List<Map<String, Object>> querySet = repository.usersGet(page);
         List<Users> users = new ArrayList<>();
         for (var record : querySet) {
             var user = new Users();
@@ -26,6 +26,21 @@ public class UsersService {
         }
         
         return users;
+    }
+
+    public List countGet(){
+
+        List<Map<String, Object>> querySet = repository.usersCountGet();
+        int count = 0;
+        List countList = new ArrayList<>();
+        for(var record : querySet){
+            count = (Integer)record.get("count");
+        }
+        for (int i = 0; i < (count / 10) + 1; i++) {
+            countList.add(i);
+        }
+        // count = (count / 10) + 1;
+        return countList;
     }
 
     public boolean createUserPost(String name, String mail){
