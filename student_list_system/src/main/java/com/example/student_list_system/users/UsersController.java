@@ -18,12 +18,13 @@ public class UsersController {
 
     @GetMapping("/users")
     public String getUser(@RequestParam(defaultValue = "0", required = false) Integer page, Model model) {
-        
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBB");
         List<Users> users = service.getUsers(page);
         model.addAttribute("users", users);
 
-        // List<Integer> count = service.countGet();
-        // model.addAttribute("pageCount", count);
+        Integer count = service.countGet();
+        // System.out.println(count + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        // model.addAttribute("page", count);
 
         return "users/users";
     }
