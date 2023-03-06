@@ -17,15 +17,13 @@ public class UsersController {
     @Autowired UsersService service;
 
     @GetMapping("/users")
-    public String getUser(@RequestParam(defaultValue = "0", required = false) Integer page, Model model) {
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBB");
-        List<Users> users = service.getUsers(page);
+    public String getUser(@RequestParam(defaultValue = "1", required = false) int page, Model model) {
+        List<Users> users = service.getUsers(page - 1);
         model.addAttribute("users", users);
 
-        Integer count = service.countGet();
-        // System.out.println(count + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        // model.addAttribute("page", count);
-
+        long maxPage = service.countGet();
+        model.addAttribute("maxPage", maxPage);
+        
         return "users/users";
     }
 

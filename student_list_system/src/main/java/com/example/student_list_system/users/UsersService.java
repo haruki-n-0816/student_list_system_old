@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,19 +28,20 @@ public class UsersService {
         return users;
     }
 
-    public int countGet(){
+    public long countGet(){
 
         List<Map<String, Object>> querySet = repository.usersCountGet();
-        Integer count = 0;
-        List<Integer> userCount = new ArrayList<>();
+        long count = 0;
         for(var record : querySet){
-            // ここが怪しい
-            userCount.add((Integer)(record.get("count")));
+            count = (Long)record.get("count");
         }
-        count = userCount.get(0);
-        count = (count / 10) + 1;
-        
-        return count;
+
+        long maxPage = (count / 10);
+        if (count % 10 > 0) {
+            maxPage++;
+        }
+
+        return maxPage;
     }
 
     public boolean createUserPost(String name, String mail){

@@ -56,12 +56,10 @@
         </tr>
     </table>
     <div style="text-align:center">
-        <!-- <th:block th:each="i : ${numbers.sequence(0,${page},1)}">
-            <<a class="btn btn-secondary" href="?page=0" text="${i}"></a>
-        </th:block> -->
-        <a class="btn btn-secondary" href="?page=0">1</a>
-        <a class="btn btn-secondary" href="?page=1">2</a>
-        <a class="btn btn-secondary" href="?page=2">3</a>
+        <!-- <a class="btn btn-secondary" th:href="@(page=${page - 1})" th:text="左"></a> -->
+        <th:block th:each="i : ${#numbers.sequence(1,maxPage)}">
+            <a class="btn btn-secondary" th:href="@{''(page=${i})}" th:text="${i}"></a>
+        </th:block>
     </div>
 </body>
 

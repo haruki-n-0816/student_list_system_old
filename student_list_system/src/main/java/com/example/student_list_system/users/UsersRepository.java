@@ -13,10 +13,20 @@ public class UsersRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    public List<Map<String, Object>> findAll(){
+        
+        String query = "select * from users;";
+        List<Map<String, Object>> users = jdbcTemplate.queryForList(query);
+        
+        return users;
+    }
+
     public List<Map<String, Object>> usersGet(Integer page){
         
-        String query = "select * from users limit ?, 10;";
-        List<Map<String, Object>> users = jdbcTemplate.queryForList(query, page * 10);
+        // 定数管理する
+        int size = 10;
+        String query = "select * from users limit ?, ?;";
+        List<Map<String, Object>> users = jdbcTemplate.queryForList(query, page * size, size);
         
         return users;
     }
