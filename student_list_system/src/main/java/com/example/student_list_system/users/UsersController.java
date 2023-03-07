@@ -23,6 +23,7 @@ public class UsersController {
 
         long maxPage = service.countGet();
         model.addAttribute("maxPage", maxPage);
+        model.addAttribute("page", page);
         
         return "users/users";
     }

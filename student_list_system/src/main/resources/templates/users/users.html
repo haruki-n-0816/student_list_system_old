@@ -56,11 +56,25 @@
         </tr>
     </table>
     <div style="text-align:center">
-        <!-- <a class="btn btn-secondary" th:href="@(page=${page - 1})" th:text="左"></a> -->
+        <th:block th:if="${page} == 1">
+            <a class="btn btn-secondary disabled" th:href="@{''(page=${page}-1)}">左</a>
+        </th:block>
+        <th:block th:unless="${page} == 1">
+            <a class="btn btn-secondary" th:href="@{''(page=${page}-1)}">左</a>
+        </th:block>
         <th:block th:each="i : ${#numbers.sequence(1,maxPage)}">
             <a class="btn btn-secondary" th:href="@{''(page=${i})}" th:text="${i}"></a>
+        </th:block>
+        <th:block th:if="${page} == maxPage">
+            <a class="btn btn-secondary disabled" th:href="@{''(page=${page}+1)}">右</a>
+        </th:block>
+        <th:block th:unless="${page} == maxPage">
+            <a class="btn btn-secondary" th:href="@{''(page=${page}+1)}">右</a>
         </th:block>
     </div>
 </body>
 
 </html>
+<script>
+
+</script>
