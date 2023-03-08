@@ -57,19 +57,54 @@
     </table>
     <div style="text-align:center">
         <th:block th:if="${page} == 1">
-            <a class="btn btn-secondary disabled" th:href="@{''(page=${page}-1)}">左</a>
+            <a class="btn btn-secondary disabled" th:href="@{''(page=${page}-1)}">前</a>
         </th:block>
         <th:block th:unless="${page} == 1">
-            <a class="btn btn-secondary" th:href="@{''(page=${page}-1)}">左</a>
+            <a class="btn btn-secondary" th:href="@{''(page=${page}-1)}">前</a>
         </th:block>
-        <th:block th:each="i : ${#numbers.sequence(1,maxPage)}">
-            <a class="btn btn-secondary" th:href="@{''(page=${i})}" th:text="${i}"></a>
+        <!-- 1~5ページの時 -->
+        <th:block th:if="1 le ${page} and ${page} le 5">
+            <th:block th:each="i : ${#numbers.sequence(1,page+4)}">
+                <th:block th:if="${page} == ${i}">
+                    <a class="btn btn-warning disabled" th:href="@{''(page=${i})}" th:text="${i}"></a>
+                </th:block>
+                <th:block th:unless="${page} == ${i}">
+                    <a class="btn btn-secondary" th:href="@{''(page=${i})}" th:text="${i}"></a>
+                </th:block>
+            </th:block>
+            <a class="btn btn-secondary disabled">...</a>
         </th:block>
-        <th:block th:if="${page} == maxPage">
-            <a class="btn btn-secondary disabled" th:href="@{''(page=${page}+1)}">右</a>
+        <!-- 5~maxPege-5の時 -->
+        <th:block th:if="6 le ${page} and ${page} le ${maxPage}-5">
+            <a class="btn btn-secondary disabled">...</a>
+            <th:block th:each="i : ${#numbers.sequence(page-4,page+4)}">
+                <th:block th:if="${page} == ${i}">
+                    <a class="btn btn-warning disabled" th:href="@{''(page=${i})}" th:text="${i}"></a>
+                </th:block>
+                <th:block th:unless="${page} == ${i}">
+                    <a class="btn btn-secondary" th:href="@{''(page=${i})}" th:text="${i}"></a>
+                </th:block>
+            </th:block>
+            <a class="btn btn-secondary disabled">...</a>
         </th:block>
-        <th:block th:unless="${page} == maxPage">
-            <a class="btn btn-secondary" th:href="@{''(page=${page}+1)}">右</a>
+        <!-- maxPege-5~maxPageの時 -->
+        <th:block th:if="${maxPage}-4 le ${page} and ${page} le ${maxPage}">
+            <a class="btn btn-secondary disabled">...</a>
+            <th:block th:each="i : ${#numbers.sequence(page-5,maxPage)}">
+                <th:block th:if="${page} == ${i}">
+                    <a class="btn btn-warning disabled" th:href="@{''(page=${i})}" th:text="${i}"></a>
+                </th:block>
+                <th:block th:unless="${page} == ${i}">
+                    <a class="btn btn-secondary" th:href="@{''(page=${i})}" th:text="${i}"></a>
+                </th:block>
+            </th:block>
+        </th:block>
+
+        <th:block th:if="${page} == ${maxPage}">
+            <a class="btn btn-secondary disabled" th:href="@{''(page=${page}+1)}">次</a>
+        </th:block>
+        <th:block th:unless="${page} == ${maxPage}">
+            <a class="btn btn-secondary" th:href="@{''(page=${page}+1)}">次</a>
         </th:block>
     </div>
 </body>
