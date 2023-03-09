@@ -15,6 +15,10 @@
     <title>研修生 編集</title>
 </header>
 
+<head>
+    <script type="text/javascript" th:src="@{/javascript/checkInput.js}"></script>
+</head>
+
 <body>
     <div class="mx-auto h1" style="text-align:center; margin-top:20px;margin-bottom:20px;">
         研修生 編集
@@ -30,11 +34,14 @@
             <input type="text" name="userName" th:value="${currentName}" style="margin-top: 20px; margin-bottom: 20px;" />
         </div>
         <div style="text-align:center">
+            <font color="red">
+                <div id="message"></div>
+            </font>
             <label>メールアドレス</label>
-            <input type="text" name="mailAddress" th:value="${currentMailAddress}" style="margin-top: 20px; margin-bottom: 20px;" />
+            <input type="text" name="mailAddress" th:value="${currentMailAddress}" style="margin-top: 20px; margin-bottom: 20px;" id="inputMail"/>
         </div>
         <div style="text-align:center">
-            <input class="btn btn-secondary rounded-pill btn-lg" type="submit" value="確認" />
+            <input class="btn btn-secondary rounded-pill btn-lg" type="submit" value="確認" id="btnSubmit"/>
             <a class="btn btn-secondary rounded-pill btn-lg" href="/users">キャンセル</a>
         </div>
     </form>
