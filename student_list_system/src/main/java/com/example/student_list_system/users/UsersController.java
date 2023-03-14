@@ -64,7 +64,7 @@ public class UsersController {
         }
         System.out.println("errorTestNo1");
         System.out.println(profileImage);
-        MultipartFile profileImageDecoded = Base64.getDecoder.decode(profileImage);
+        byte[] profileImageDecoded = Base64.decodeBase64(profileImage);
         service.createUserPost(name, mailAddress);
 
         return "redirect:/users";
