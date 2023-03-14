@@ -30,6 +30,11 @@
                 <label th:text="${confirmMailAddress}"></label>
                 <input type="hidden" name="mailAddress" th:value="${confirmMailAddress}"/>
             </div>
+            <div>
+                <label>プロフィール画像</label>
+                <img th:src="${confirmProfileImage}"></img>
+                <input type="hidden" name="profileImage" th:value="${confirmProfileImage}"/>
+            </div>
             <input class="btn btn-primary rounded-pill btn-lg" type="submit" value="登録"/>
             <a class="btn btn-secondary rounded-pill btn-lg" href="/users">キャンセル</a>
         </form>

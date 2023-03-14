@@ -24,9 +24,9 @@ public class UsersRepository {
     public List<Map<String, Object>> usersGet(Integer page){
         
         // 定数管理する
-        int size = 10;
+        int showPeople = 10;
         String query = "select * from users limit ?, ?;";
-        List<Map<String, Object>> users = jdbcTemplate.queryForList(query, page * size, size);
+        List<Map<String, Object>> users = jdbcTemplate.queryForList(query, page * showPeople, showPeople);
         
         return users;
     }

@@ -2,6 +2,7 @@ package com.example.student_list_system.users;
 
 import java.util.List;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("")
@@ -34,25 +37,42 @@ public class UsersController {
         return "users/create";
     }
 
-    @PostMapping("/create_confirm")
-    private String createConfirmUser(@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress,Model model){
 
+    @PostMapping("/create_confirm")
+    private String createConfirmUser(@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress,
+    @RequestPart("profileImage")MultipartFile profileImage, Model model)throws Exception{
+        
+        StringBuffer data = new StringBuffer();
+        String base64 = new String(Base64.encodeBase64(profileImage.getBytes()),"ASCII");
+        
+        data.append("data:image/png;base64,");
+        data.append(base64);
+        
         model.addAttribute("confirmName", name);
         model.addAttribute("confirmMailAddress", mailAddress);
+        model.addAttribute("confirmProfileImage", data.toString());
 
         return "users/create-confirm";
     }
 
     @PostMapping("/create_complete")
-    public String createCompleteUser(@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress,Model model) {
+    public String createCompleteUser(@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress,
+    @RequestParam("profileImage")String profileImage, Model model){
 
+        if (profileImage.isEmpty()) {
+            System.out.println("none image");
+        }
+        System.out.println("errorTestNo1");
+        System.out.println(profileImage);
+        MultipartFile profileImageDecoded = Base64.getDecoder.decode(profileImage);
         service.createUserPost(name, mailAddress);
 
         return "redirect:/users";
     }
 
     @PostMapping("/delete")
-    public String deleteUser(@RequestParam("id") Integer id,@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress, Model model){
+    public String deleteUser(@RequestParam("id") Integer id,@RequestParam("userName") String name,
+    @RequestParam("mailAddress") String mailAddress, Model model){
 
         model.addAttribute("confirmId",id);
         model.addAttribute("confirmName",name);
@@ -60,6 +80,7 @@ public class UsersController {
 
         return "users/delete";
     }
+
     @PostMapping("delete_complete")
     public String deleteCompleteUser(@RequestParam("id") String id,Model model){
         
@@ -69,7 +90,8 @@ public class UsersController {
     }
 
     @PostMapping("/update")
-    public String updateUser(@RequestParam("id") Integer id,@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress, Model model){
+    public String updateUser(@RequestParam("id") Integer id,@RequestParam("userName") String name,
+    @RequestParam("mailAddress") String mailAddress, Model model){
         
         model.addAttribute("id",id);
         model.addAttribute("currentName",name);
@@ -79,7 +101,8 @@ public class UsersController {
     }
 
     @PostMapping("/update_confirm")
-    public String updateConfirmUser(@RequestParam("id") Integer id,@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress, Model model){
+    public String updateConfirmUser(@RequestParam("id") Integer id,@RequestParam("userName") String name,
+    @RequestParam("mailAddress") String mailAddress, Model model){
 
         model.addAttribute("confirmId",id);
         model.addAttribute("confirmName",name);
@@ -89,7 +112,8 @@ public class UsersController {
     }
 
     @PostMapping("/update_complete")
-    public String updateCompleteUser(@RequestParam("id") Integer id,@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress, Model model){
+    public String updateCompleteUser(@RequestParam("id") Integer id,@RequestParam("userName") String name,
+    @RequestParam("mailAddress") String mailAddress, Model model){
         
         service.updateUserPost(id, name, mailAddress);
 
