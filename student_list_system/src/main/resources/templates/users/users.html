@@ -28,6 +28,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">名前</th>
                 <th scope="col">メールアドレス</th>
+                <th scope="col">プロフィール画像</th>
                 <th scope="col">削除</th>
                 <th scope="col">編集</th>
             </tr>
@@ -37,12 +38,14 @@
             <td th:text="${user.id}"></td>
             <td th:text="${user.name}"></td>
             <td th:text="${user.mailAddress}"></td>
+            <td> <img th:src="${user.profileImagePath}" th:alt="${user.name} + のプロフィール画像" width="30" height="30"></td>
             <td>
                 <form method="post" action="/delete">
                     <input type="image" th:src="@{\icon\trashbox.png}">
                     <input type="hidden" name="id" th:value="${user.id}">
                     <input type="hidden" name="userName" th:value="${user.name}">
                     <input type="hidden" name="mailAddress" th:value="${user.mailAddress}">
+                    <input type="hidden" name="profileImage" th:value="${user.profileImagePath}">
                 </form>
             </td>
             <td>
@@ -51,6 +54,7 @@
                     <input type="hidden" name="id" th:value="${user.id}">
                     <input type="hidden" name="userName" th:value="${user.name}">
                     <input type="hidden" name="mailAddress" th:value="${user.mailAddress}">
+                    <input type="hidden" name="profileImage" th:value="${user.profileImagePath}">
                 </form>
             </td>
         </tr>

@@ -41,11 +41,20 @@ public class UsersRepository {
 
     public boolean createUserRecord(Users users){
 
-        String query = "insert into users(name, mail_address) values(?, ?);";
-        jdbcTemplate.update(query, users.getName(), users.getMailAddress());
+        String query = "insert into users(name, mail_address, profile_image_path) values(?, ?, ?);";
+        jdbcTemplate.update(query, users.getName(), users.getMailAddress(), users.getProfileImagePath());
 
         return true;
     }
+
+    public List<Map<String, Object>> tableStatusGet(){
+
+        String query = "show table status;";
+        List<Map<String, Object>> count = jdbcTemplate.queryForList(query);
+
+        return count;
+    }
+
     public boolean deleteUserRecord(Users users){
 
         String query = "delete from users where id = ?;";
@@ -56,8 +65,8 @@ public class UsersRepository {
 
     public boolean updateUserRecord(Users users){
 
-        String query = "update users set name = ?, mail_address = ? where id = ?;";
-        jdbcTemplate.update(query, users.getName(), users.getMailAddress(), users.getId());
+        String query = "update users set name = ?, mail_address = ?, profile_image_path = ? where id = ?;";
+        jdbcTemplate.update(query, users.getName(), users.getMailAddress(), users.getProfileImagePath(), users.getId());
         
         return true;
     }

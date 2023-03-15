@@ -1,8 +1,14 @@
 package com.example.student_list_system.users;
 
+import java.io.IOException;
+import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Base64;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("")
 public class UsersController {
-    
-    @Autowired UsersService service;
+
+    @Autowired
+    UsersService service;
 
     @GetMapping("/users")
     public String getUser(@RequestParam(defaultValue = "1", required = false) int page, Model model) {
@@ -27,95 +34,115 @@ public class UsersController {
         long maxPage = service.countGet();
         model.addAttribute("maxPage", maxPage);
         model.addAttribute("page", page);
-        
+
         return "users/users";
     }
 
     @GetMapping("/create")
-    private String createUser(){
+    private String createUser() {
 
         return "users/create";
     }
 
-
     @PostMapping("/create_confirm")
-    private String createConfirmUser(@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress,
-    @RequestPart("profileImage")MultipartFile profileImage, Model model)throws Exception{
-        
-        StringBuffer data = new StringBuffer();
-        String base64 = new String(Base64.encodeBase64(profileImage.getBytes()),"ASCII");
-        
-        data.append("data:image/png;base64,");
-        data.append(base64);
-        
+    private String createConfirmUser(@RequestParam("userName") String name,
+            @RequestParam("mailAddress") String mailAddress,
+            @RequestPart("profileImage") MultipartFile profileImage, Model model) throws Exception {
+
+        String base64 = Base64.getEncoder().encodeToString(profileImage.getBytes());
+
         model.addAttribute("confirmName", name);
         model.addAttribute("confirmMailAddress", mailAddress);
-        model.addAttribute("confirmProfileImage", data.toString());
+        model.addAttribute("confirmProfileImage", base64);
 
         return "users/create-confirm";
     }
 
     @PostMapping("/create_complete")
-    public String createCompleteUser(@RequestParam("userName") String name,@RequestParam("mailAddress") String mailAddress,
-    @RequestParam("profileImage")String profileImage, Model model){
+    public String createCompleteUser(@RequestParam("userName") String name,
+            @RequestParam("mailAddress") String mailAddress,
+            @RequestParam("profileImage") String profileImageString, Model model) throws IOException {
 
-        if (profileImage.isEmpty()) {
-            System.out.println("none image");
-        }
-        System.out.println("errorTestNo1");
-        System.out.println(profileImage);
-        byte[] profileImageDecoded = Base64.decodeBase64(profileImage);
-        service.createUserPost(name, mailAddress);
+        byte[] profileImageDecoded = Base64.getDecoder().decode(profileImageString);
+
+        BigInteger id = service.autoIncrementCountGet();
+
+        String IdTimeFilename = id + "_" + DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS").format(LocalDateTime.now())
+                + ".png";
+
+        String filePath = "C:/Users/uxauser/road-to-geek/student_list_system/student_list_system/src/main/resources/static/student_list_system_profileImage/"
+                + IdTimeFilename;
+        String filePathDb = "/student_list_system_profileImage/" + IdTimeFilename;
+
+        Files.write(Paths.get(filePath), profileImageDecoded);
+        service.createUserPost(name, mailAddress, filePathDb);
 
         return "redirect:/users";
     }
 
     @PostMapping("/delete")
-    public String deleteUser(@RequestParam("id") Integer id,@RequestParam("userName") String name,
-    @RequestParam("mailAddress") String mailAddress, Model model){
+    public String deleteUser(@RequestParam("id") Integer id, @RequestParam("userName") String name,
+            @RequestParam("mailAddress") String mailAddress, Model model) {
 
-        model.addAttribute("confirmId",id);
-        model.addAttribute("confirmName",name);
+        model.addAttribute("confirmId", id);
+        model.addAttribute("confirmName", name);
         model.addAttribute("confirmMailAddress", mailAddress);
 
         return "users/delete";
     }
 
     @PostMapping("delete_complete")
-    public String deleteCompleteUser(@RequestParam("id") String id,Model model){
-        
+    public String deleteCompleteUser(@RequestParam("id") String id, Model model) {
+
         service.deleteUserPost(id);
 
         return "redirect:/users";
     }
 
     @PostMapping("/update")
-    public String updateUser(@RequestParam("id") Integer id,@RequestParam("userName") String name,
-    @RequestParam("mailAddress") String mailAddress, Model model){
-        
-        model.addAttribute("id",id);
-        model.addAttribute("currentName",name);
+    public String updateUser(@RequestParam("id") Integer id, @RequestParam("userName") String name,
+            @RequestParam("mailAddress") String mailAddress, @RequestParam("profileImage") String profileImageString,Model model) {
+
+        model.addAttribute("id", id);
+        model.addAttribute("currentName", name);
         model.addAttribute("currentMailAddress", mailAddress);
+        model.addAttribute("profileImagePath",profileImageString);
 
         return "users/update";
     }
 
     @PostMapping("/update_confirm")
-    public String updateConfirmUser(@RequestParam("id") Integer id,@RequestParam("userName") String name,
-    @RequestParam("mailAddress") String mailAddress, Model model){
+    public String updateConfirmUser(@RequestParam("id") Integer id, @RequestParam("userName") String name,
+            @RequestParam("mailAddress") String mailAddress,
+            @RequestPart("profileImage") MultipartFile profileImage, Model model) throws IOException {
 
-        model.addAttribute("confirmId",id);
-        model.addAttribute("confirmName",name);
+        String base64 = Base64.getEncoder().encodeToString(profileImage.getBytes());
+
+        model.addAttribute("confirmId", id);
+        model.addAttribute("confirmName", name);
         model.addAttribute("confirmMailAddress", mailAddress);
+        model.addAttribute("confirmProfileImage", base64);
 
         return "users/update-confirm";
     }
 
     @PostMapping("/update_complete")
-    public String updateCompleteUser(@RequestParam("id") Integer id,@RequestParam("userName") String name,
-    @RequestParam("mailAddress") String mailAddress, Model model){
+    public String updateCompleteUser(@RequestParam("id") Integer id, @RequestParam("userName") String name,
+            @RequestParam("mailAddress") String mailAddress,
+            @RequestParam("profileImage") String profileImageString, Model model) throws IOException {
+
+        byte[] profileImageDecoded = Base64.getDecoder().decode(profileImageString);
+
+        String IdTimeFilename = id + "_" + DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS").format(LocalDateTime.now())
+                + ".png";
+
+        String filePath = "C:/Users/uxauser/road-to-geek/student_list_system/student_list_system/src/main/resources/static/student_list_system_profileImage/"
+                + IdTimeFilename;
+        String filePathDb = "/student_list_system_profileImage/" + IdTimeFilename;
+
+        Files.write(Paths.get(filePath), profileImageDecoded);
         
-        service.updateUserPost(id, name, mailAddress);
+        service.updateUserPost(id, name, mailAddress,filePathDb);
 
         return "redirect:/users";
     }

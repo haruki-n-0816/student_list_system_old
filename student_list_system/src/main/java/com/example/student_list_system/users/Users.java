@@ -7,4 +7,5 @@ public class Users {
     private int id;
     private String name;
     private String mailAddress;
+    private String profileImagePath;
 }

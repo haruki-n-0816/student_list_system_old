@@ -23,7 +23,7 @@
     <div class="mx-auto h1" style="text-align:center; margin-top:20px;margin-bottom:20px;">
         研修生 編集
     </div>
-    <form method="post" action="/update_confirm">
+    <form method="post" action="/update_confirm" enctype="multipart/form-data">
         <div style="text-align:center">
             <label>ID</label>
             <label th:text="${id}"></label>
@@ -39,6 +39,11 @@
             </font>
             <label>メールアドレス</label>
             <input type="text" name="mailAddress" th:value="${currentMailAddress}" style="margin-top: 20px; margin-bottom: 20px;" id="inputMail"/>
+        </div>
+        <div style="text-align:center">
+            <label>プロフィール画像</label>
+            <input type="file" name="profileImage" accept="image/png">
+            <div><img th:src="${profileImagePath}" width="100" height="100"></div>
         </div>
         <div style="text-align:center">
             <input class="btn btn-secondary rounded-pill btn-lg" type="submit" value="確認" id="btnSubmit"/>
