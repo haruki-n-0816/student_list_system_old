@@ -15,6 +15,11 @@
     <title>研修生一覧</title>
 </header>
 
+<head>
+    <link th:href="@{/css/users.css}" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/javascript/delete.js}"></script>
+</head>
+
 <body>
     <div class="mx-auto h1" style="text-align:center; margin-top:20px;margin-bottom:20px;">
         研修生一覧
@@ -28,29 +33,43 @@
                 <th scope="col">ID</th>
                 <th scope="col">名前</th>
                 <th scope="col">メールアドレス</th>
-                <th scope="col">プロフィール画像</th>
+                <th scope="col">画像</th>
                 <th scope="col">削除</th>
                 <th scope="col">編集</th>
             </tr>
         </thead>
-
         <tr th:each="user : ${users}">
             <td th:text="${user.id}"></td>
             <td th:text="${user.name}"></td>
             <td th:text="${user.mailAddress}"></td>
-            <td> <img th:src="${user.profileImagePath}" th:alt="${user.name} + のプロフィール画像" width="30" height="30"></td>
+            <td><img th:src="${user.profileImagePath}" th:alt="${user.name} + のプロフィール画像" width="30" height="30"></td>
             <td>
-                <form method="post" action="/delete">
-                    <input type="image" th:src="@{\icon\trashbox.png}">
-                    <input type="hidden" name="id" th:value="${user.id}">
-                    <input type="hidden" name="userName" th:value="${user.name}">
-                    <input type="hidden" name="mailAddress" th:value="${user.mailAddress}">
-                    <input type="hidden" name="profileImage" th:value="${user.profileImagePath}">
-                </form>
+                <input type="image" alt="削除" th:src="@{\icon\trashbox.png}" th:onClick="|check('__${user.id}__','__${user.name}__','__${user.mailAddress}__')|"/>
+                <div id="overflow">
+                    <div class="conf" style="text-align:center">
+                        <p>
+                            ID:
+                            <block id="userId"><block>
+                        </p>
+                        <p>
+                            名前:
+                            <block id="userName"></block>
+                        </p>
+                        <p>
+                            メールアドレス:
+                            <block id="userMailAddress"></block>
+                        </p>
+                        <p>こちらのデータを削除します。本当によろしいですか?</p>
+                        <div class="btns" style="text-align:center">
+                            <input type="button" class="btn btn-danger rounded-pill btn-lg" value="削除" onClick="next();">
+                            <input type="button" class="btn btn-secondary rounded-pill btn-lg" value="キャンセル" onClick="cansel();">
+                        </div>
+                    </div>
+                </div>
             </td>
             <td>
                 <form method="post" action="/update">
-                    <input type="image" th:src="@{\icon\pencil.png}">
+                    <input type="image" alt="編集" th:src="@{\icon\pencil.png}">
                     <input type="hidden" name="id" th:value="${user.id}">
                     <input type="hidden" name="userName" th:value="${user.name}">
                     <input type="hidden" name="mailAddress" th:value="${user.mailAddress}">
