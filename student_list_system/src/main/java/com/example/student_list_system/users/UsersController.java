@@ -92,7 +92,7 @@ public class UsersController {
     }
 
     @PostMapping("delete_complete")
-    public String deleteCompleteUser(@RequestParam("id") String id, Model model) {
+    public String deleteCompleteUser(Integer id) {
 
         service.deleteUserPost(id);
 

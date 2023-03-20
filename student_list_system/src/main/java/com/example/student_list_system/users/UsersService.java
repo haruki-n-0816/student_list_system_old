@@ -67,11 +67,10 @@ public class UsersService {
         return true;
     }
     
-    public boolean deleteUserPost(String id){
+    public boolean deleteUserPost(Integer id){
 
         Users user = new Users();
-        user.setId(Integer.parseInt(id));
-        repository.deleteUserRecord(user);
+        repository.deleteUserRecord(id);
 
         return true;
     }

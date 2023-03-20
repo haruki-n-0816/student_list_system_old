@@ -21,6 +21,7 @@
 </head>
 
 <body>
+    <div id="overflow"></div>
     <div class="mx-auto h1" style="text-align:center; margin-top:20px;margin-bottom:20px;">
         研修生一覧
     </div>
@@ -44,28 +45,28 @@
             <td th:text="${user.mailAddress}"></td>
             <td><img th:src="${user.profileImagePath}" th:alt="${user.name} + のプロフィール画像" width="30" height="30"></td>
             <td>
-                <input type="image" alt="削除" th:src="@{\icon\trashbox.png}" th:onClick="|check('__${user.id}__','__${user.name}__','__${user.mailAddress}__')|"/>
-                <div id="overflow">
-                    <div class="conf" style="text-align:center">
-                        <p>
-                            ID:
-                            <block id="userId"><block>
-                        </p>
-                        <p>
-                            名前:
-                            <block id="userName"></block>
-                        </p>
-                        <p>
-                            メールアドレス:
-                            <block id="userMailAddress"></block>
-                        </p>
-                        <p>こちらのデータを削除します。本当によろしいですか?</p>
-                        <div class="btns" style="text-align:center">
-                            <input type="button" class="btn btn-danger rounded-pill btn-lg" value="削除" onClick="next();">
-                            <input type="button" class="btn btn-secondary rounded-pill btn-lg" value="キャンセル" onClick="cansel();">
-                        </div>
+                <input type="image" alt="削除" th:src="@{\icon\trashbox.png}"
+                    th:onClick="|check('__${user.id}__','__${user.name}__','__${user.mailAddress}__')|" />
+
+            <!-- <div class="conf" style="text-align:center">
+                    <p>
+                        ID:
+                        <block id="userId"><block>
+                    </p>
+                    <p>
+                        名前:
+                        <block id="userName"></block>
+                    </p>
+                    <p>
+                        メールアドレス:
+                        <block id="userMailAddress"></block>
+                    </p>
+                    <p>こちらのデータを削除します。本当によろしいですか?</p>
+                    <div class="btns" style="text-align:center">
+                        <input type="button" class="btn btn-danger rounded-pill btn-lg" value="削除" th:onClick="|next(__${user.id}__)|">
+                        <input type="button" class="btn btn-secondary rounded-pill btn-lg" value="キャンセル" onClick="cansel();">
                     </div>
-                </div>
+                </div> -->
             </td>
             <td>
                 <form method="post" action="/update">

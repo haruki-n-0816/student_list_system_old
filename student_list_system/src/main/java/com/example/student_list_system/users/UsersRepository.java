@@ -55,10 +55,10 @@ public class UsersRepository {
         return count;
     }
 
-    public boolean deleteUserRecord(Users users){
+    public boolean deleteUserRecord(Integer id){
 
         String query = "delete from users where id = ?;";
-        jdbcTemplate.update(query, users.getId());
+        jdbcTemplate.update(query, id);
 
         return true;
     }
