@@ -1,5 +1,6 @@
 package com.example.student_list_system.users;
 
+import java.io.File;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +69,21 @@ public class UsersService {
     }
     
     public boolean deleteUserPost(Integer id){
+        List<Map<String, Object>> pathRecord = repository.deleteUserImage(id);
+        String path = "";
+        for(var record : pathRecord){
+            path = (String)record.get("profile_image_path");
+        }
+        System.out.println(path);
+        // String path 
+        File file = new File("C:/Users/uxauser/road-to-geek/student_list_system/student_list_system/src/main/resources/static" + path);
 
-        Users user = new Users();
+        if (file.delete()) {
+            System.out.println(file.getName() + " を削除しました。");
+        } else {
+            System.out.println("ファイルを削除できませんでした。");
+        }
+
         repository.deleteUserRecord(id);
 
         return true;

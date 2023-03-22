@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <header>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -16,7 +17,6 @@
 </header>
 
 <head>
-    <link th:href="@{/css/users.css}" rel="stylesheet">
     <script type="text/javascript" th:src="@{/javascript/delete.js}"></script>
 </head>
 
@@ -47,26 +47,6 @@
             <td>
                 <input type="image" alt="削除" th:src="@{\icon\trashbox.png}"
                     th:onClick="|check('__${user.id}__','__${user.name}__','__${user.mailAddress}__')|" />
-
-            <!-- <div class="conf" style="text-align:center">
-                    <p>
-                        ID:
-                        <block id="userId"><block>
-                    </p>
-                    <p>
-                        名前:
-                        <block id="userName"></block>
-                    </p>
-                    <p>
-                        メールアドレス:
-                        <block id="userMailAddress"></block>
-                    </p>
-                    <p>こちらのデータを削除します。本当によろしいですか?</p>
-                    <div class="btns" style="text-align:center">
-                        <input type="button" class="btn btn-danger rounded-pill btn-lg" value="削除" th:onClick="|next(__${user.id}__)|">
-                        <input type="button" class="btn btn-secondary rounded-pill btn-lg" value="キャンセル" onClick="cansel();">
-                    </div>
-                </div> -->
             </td>
             <td>
                 <form method="post" action="/update">
@@ -118,7 +98,7 @@
         <th:block th:if="${maxPage}-5 le ${page} and ${page} le ${maxPage}">
             <a class="btn btn-secondary" th:href="@{''(page=1)}" th:text="${1}"></a>
             <a class="btn btn-secondary disabled">...</a>
-            <th:block th:each="i : ${#numbers.sequence(page-5,maxPage)}">
+            <th:block th:each="i : ${#numbers.sequence(page-4,maxPage)}">
                 <th:block th:if="${page} == ${i}">
                     <a class="btn btn-warning disabled" th:href="@{''(page=${i})}" th:text="${i}"></a>
                 </th:block>
