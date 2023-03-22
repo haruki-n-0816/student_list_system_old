@@ -68,9 +68,12 @@ function next() {
                 alert("該当するデータはありませんでした");
                 return;
             }
+            // var targetElement = document.getElementById('usersList');
+            // targetElement.innerHTML = request.responseText;
             location.reload(true);
             $("#conf").remove();
             $("#overflow").hide();
+            request.send(null);
         }
     };
     request.send("id=" + encodeURIComponent(id));

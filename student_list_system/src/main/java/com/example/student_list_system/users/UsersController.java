@@ -69,7 +69,7 @@ public class UsersController {
         
         String IdTimeFilename = id + "_" + DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS").format(LocalDateTime.now())
                 + ".png";
-                System.out.println("ErrorPoint_4");
+                
         String filePath = "C:/Users/uxauser/road-to-geek/student_list_system/student_list_system/src/main/resources/static/student_list_system_profileImage/"
                 + IdTimeFilename;
         String filePathDb = "/student_list_system_profileImage/" + IdTimeFilename;
