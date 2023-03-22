@@ -47,7 +47,7 @@ public class UsersController {
     @PostMapping("/create_confirm")
     private String createConfirmUser(@RequestParam("userName") String name,
             @RequestParam("mailAddress") String mailAddress,
-            @RequestPart("profileImage") MultipartFile profileImage, Model model) throws Exception {
+            @RequestPart("profileImage") MultipartFile profileImage, Model model) throws IOException {
 
         String base64 = Base64.getEncoder().encodeToString(profileImage.getBytes());
 
@@ -64,17 +64,18 @@ public class UsersController {
             @RequestParam("profileImage") String profileImageString, Model model) throws IOException {
 
         byte[] profileImageDecoded = Base64.getDecoder().decode(profileImageString);
-
+        
         BigInteger id = service.autoIncrementCountGet();
-
+        
         String IdTimeFilename = id + "_" + DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS").format(LocalDateTime.now())
                 + ".png";
-
+                System.out.println("ErrorPoint_4");
         String filePath = "C:/Users/uxauser/road-to-geek/student_list_system/student_list_system/src/main/resources/static/student_list_system_profileImage/"
                 + IdTimeFilename;
         String filePathDb = "/student_list_system_profileImage/" + IdTimeFilename;
-
+        
         Files.write(Paths.get(filePath), profileImageDecoded);
+        
         service.createUserPost(name, mailAddress, filePathDb);
 
         return "redirect:/users";

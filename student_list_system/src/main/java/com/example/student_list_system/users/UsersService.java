@@ -58,11 +58,12 @@ public class UsersService {
     }
 
     public boolean createUserPost(String name, String mail,String path){
-
+        
         Users user = new Users();
         user.setName(name);
         user.setMailAddress(mail);
         user.setProfileImagePath(path);
+        
         repository.createUserRecord(user);
 
         return true;
@@ -75,7 +76,7 @@ public class UsersService {
             path = (String)record.get("profile_image_path");
         }
         System.out.println(path);
-        // String path 
+        
         File file = new File("C:/Users/uxauser/road-to-geek/student_list_system/student_list_system/src/main/resources/static" + path);
 
         if (file.delete()) {

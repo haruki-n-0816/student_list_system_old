@@ -40,7 +40,7 @@ public class UsersRepository {
     }
 
     public boolean createUserRecord(Users users) {
-
+        
         String query = "insert into users(name, mail_address, profile_image_path) values(?, ?, ?);";
         jdbcTemplate.update(query, users.getName(), users.getMailAddress(), users.getProfileImagePath());
 
@@ -65,7 +65,6 @@ public class UsersRepository {
 
     public List<Map<String, Object>> deleteUserImage(Integer id) {
 
-        System.out.println("ErrorTest_1");
         String query = "select profile_image_path from users where id = ?;";
 
         return jdbcTemplate.queryForList(query, id);
